@@ -65,7 +65,7 @@ export default function BudgetsPage() {
         </p>
       </header>
       <div className="flex justify-center  w-full sm:max-w-[80%] lg:max-w-[70%] mx-auto ">
-        <div className="flex flex-wrap gap-2.5 bg-slate-600/50 sm:w-[58%] justify-between px-3 py-1 sm:px-5 sm:py-1.5 rounded-full hover:border-slate-700 hover:bg-slate-600/60">
+        <div className="flex gap-2.5 bg-slate-600/50 sm:w-fill lg:w-[60%] justify-between px-3 py-1 sm:px-5 sm:py-1.5 rounded-full hover:border-slate-700 hover:bg-slate-600/60">
           <button type="button" onClick={() => handleChange("prev")}>
             <ChevronLeft size={22} />
           </button>
