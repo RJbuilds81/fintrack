@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
 import { ResponsiveContainer, PieChart, Pie, Sector } from "recharts";
-import { PieChart as PieChartIcon } from "lucide-react";
+import { ArrowRight, PieChart as PieChartIcon } from "lucide-react";
 import { formatCurrency } from "../../utility/formatFunctions";
+import { Link } from "react-router-dom";
 const fallbackPalette = [
   "#FF006E",
   "#8338EC",
@@ -147,6 +148,18 @@ export const CategoryChartCard = ({ data = [] }) => {
             </div>
           </div>
         )}
+      </div>
+      <div className="mt-6 border-t border-slate-800/80 pt-4">
+        <Link
+          to="/reports"
+          className="group flex items-center justify-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-emerald-400"
+        >
+          <span>View full report</span>
+          <ArrowRight
+            size={14}
+            className="transition-transform duration-150 group-hover:translate-x-1"
+          />
+        </Link>
       </div>
     </div>
   );

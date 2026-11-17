@@ -51,18 +51,18 @@ export const RecentTransactionsCard = ({ data = [] }) => {
                     </div>
 
                     <div className="flex flex-col min-w-0">
-                      <span className="truncate text-lg font-medium text-slate-200">
+                      <span className="truncate text-sm sm:text-lg font-medium text-slate-200">
                         {transaction.category.name}
                       </span>
                       <span className="text-sm text-slate-500">
-                        {transaction.description || "Transaction"}
+                        {transaction.description || ""}
                       </span>
                     </div>
                   </div>
 
                   <div className="ml-4 shrink-0 text-right flex flex-col">
                     <span
-                      className={`text-lg font-semibold tracking-tight ${
+                      className={`text-sm sm:text-lg font-semibold tracking-tight ${
                         transaction.type == "income"
                           ? "text-emerald-400"
                           : "text-rose-400"
