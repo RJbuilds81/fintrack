@@ -251,7 +251,7 @@ export default function ReportsPage() {
             <label className="text-xs font-medium tracking-wider text-slate-400 uppercase">
               Date Range
             </label>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <input
                 type="date"
                 required
