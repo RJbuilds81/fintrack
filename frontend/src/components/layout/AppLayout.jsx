@@ -68,7 +68,7 @@ export default function AppLayout() {
               <div className="flex items-center gap-2.5">
                 <img
                   src={logo}
-                  alt="logo"
+                  alt="FinTrack logo"
                   className="h-9 w-9 rounded-full border border-emerald-400"
                 />
                 <span className="text-xl font-bold tracking-wide text-emerald-400">
@@ -77,8 +77,8 @@ export default function AppLayout() {
               </div>
             ) : (
               <img
-                src="/src/assets/fintrack_logo.png"
-                alt="logo"
+                src={logo}
+                alt="FinTrack logo"
                 className="mx-auto h-8 w-8 rounded-full border border-emerald-400"
               />
             )}
