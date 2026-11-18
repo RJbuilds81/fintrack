@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "/src/assets/fintrack_logo.png";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -33,66 +34,78 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-900 text-slate-100  ">
-      <div className="w-full max-w-md rounded-xl bg-slate-800 p-8 shadow-lg ">
-        <h2 className="text-2xl font-bold text-emerald-400">Login</h2>
-        {errorMessage && (
-          <div className="mt-3 rounded-lg border border-red-500/50 bg-red-500/10 p-3 text-sm text-red-400">
-            {errorMessage}
-          </div>
-        )}
-        <form onSubmit={handleSubmit} className="mt-3 flex flex-col gap-3">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="mr-1 text-emerald-400">
-              Email
-            </label>
-            <input
-              name="email"
-              type="email"
-              autoComplete="email"
-              aria-label="email"
-              id="email"
-              required
-              placeholder="johnDoe@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              className="border-2 border-slate-600 bg-slate-700 rounded-md pl-1 placeholder:text-sm focus:outline-0 focus:border-slate-500"
-            />
-          </div>
+    <div className="h-screen overflow-hidden bg-slate-900 text-slate-100">
+      <div className="flex items-center gap-2.5 pl-5 pt-5 text-emerald-400">
+        <img
+          src={logo}
+          alt="logo"
+          className="h-12 w-12 rounded-full border border-emerald-400"
+        />
+        <span className="text-3xl font-bold tracking-wide text-emerald-400">
+          FinTrack
+        </span>
+      </div>
+      <div className="min-h-screen flex items-center justify-center bg-slate-900 text-slate-100 pb-10">
+        <div className="w-full max-w-md rounded-xl bg-slate-800 p-8 shadow-lg ">
+          <h2 className="text-2xl font-bold text-emerald-400">Login</h2>
+          {errorMessage && (
+            <div className="mt-3 rounded-lg border border-red-500/50 bg-red-500/10 p-3 text-sm text-red-400">
+              {errorMessage}
+            </div>
+          )}
+          <form onSubmit={handleSubmit} className="mt-3 flex flex-col gap-3">
+            <div className="flex flex-col gap-1">
+              <label htmlFor="email" className="mr-1 text-emerald-400">
+                Email
+              </label>
+              <input
+                name="email"
+                type="email"
+                autoComplete="email"
+                aria-label="email"
+                id="email"
+                required
+                placeholder="johnDoe@example.com"
+                value={formData.email}
+                onChange={handleChange}
+                className="border-2 border-slate-600 bg-slate-700 rounded-md pl-1 placeholder:text-sm focus:outline-0 focus:border-slate-500"
+              />
+            </div>
 
-          <div className="flex flex-col">
-            <label htmlFor="password" className="mr-1 text-emerald-400">
-              Password
-            </label>
-            <input
-              name="password"
-              type="password"
-              autoComplete="password"
-              aria-label="password"
-              id="password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              className="border-2 border-slate-600 bg-slate-700 rounded-md pl-1 placeholder:text-sm focus:outline-0 focus:border-slate-500"
-            />
-          </div>
-          <div>
-            <button
-              type="submit"
-              aria-label="Submit"
-              disabled={isSubmitting}
-              className="ml-1 mt-3 border rounded-md bg-slate-500 text-md p-1 border-slate-600 cursor-pointer"
-            >
-              {isSubmitting ? "Logging in..." : "Login"}
-            </button>
-            <Link
-              to="/register"
-              className="mt-4 ml-2 inline-block text-sm text-emerald-400 underline"
-            >
-              New to fintrack? Go to Register
-            </Link>
-          </div>
-        </form>
+            <div className="flex flex-col">
+              <label htmlFor="password" className="mr-1 text-emerald-400">
+                Password
+              </label>
+              <input
+                name="password"
+                type="password"
+                autoComplete="password"
+                aria-label="password"
+                id="password"
+                required
+                value={formData.password}
+                onChange={handleChange}
+                className="border-2 border-slate-600 bg-slate-700 rounded-md pl-1 placeholder:text-sm focus:outline-0 focus:border-slate-500"
+              />
+            </div>
+            <div>
+              <button
+                type="submit"
+                aria-label="Submit"
+                disabled={isSubmitting}
+                className="ml-1 mt-3 border rounded-md bg-slate-500 text-md p-1 border-slate-600 cursor-pointer"
+              >
+                {isSubmitting ? "Logging in..." : "Login"}
+              </button>
+              <Link
+                to="/register"
+                className="mt-4 ml-2 inline-block text-sm text-emerald-400 underline"
+              >
+                New to fintrack? Go to Register
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
