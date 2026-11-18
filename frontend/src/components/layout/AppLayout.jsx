@@ -13,6 +13,8 @@ import {
   LogOut,
 } from "lucide-react";
 
+import logo from "/src/assets/fintrack_logo.png";
+
 const navItems = [
   { to: "/", label: "Dashboard", icon: House, end: true },
   { to: "/transactions", label: "Transactions", icon: ArrowRightLeft },
@@ -65,7 +67,7 @@ export default function AppLayout() {
             {expanded ? (
               <div className="flex items-center gap-2.5">
                 <img
-                  src="/src/assets/fintrack_logo.png"
+                  src={logo}
                   alt="logo"
                   className="h-9 w-9 rounded-full border border-emerald-400"
                 />
