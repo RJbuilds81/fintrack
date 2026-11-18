@@ -1,76 +1,53 @@
-# FinTrack - Living Project State & Architectural Context
+# FinTrack — Project State & Architecture Log
 
-## 1. Project Overview & Architecture
-
-- **Goal**: Production-style personal finance management application built as a serious backend and full-stack engineering practice project[cite: 9].
-- **Architecture**: Monorepo with a FastAPI modular monolith backend and a decoupled client-side React SPA[cite: 9, 10].
-- **Directory Structure**:
-    02_fintrack/
-    ├── backend/               # FastAPI Modular Monolith[cite: 9, 10]
-    ├── frontend/              # Vite + React (JavaScript) + Tailwind CSS v4
-    ├── .github/workflows/     # GitHub Actions CI/CD Pipeline
-    ├── docker-compose.yml     # Multi-Container Orchestration (API, DB, Redis, Worker)
-    └── PROJECT_STATE.md       # Living Context Anchor
+**Status:** Complete & Containerized (Production Ready)  
+**Last Updated:** November 2026
 
 ---
 
-## 2. Technology Stack & Specifications
+## 1. System Architecture Overview
 
-### Backend (/backend)
+FinTrack is a full-stack personal finance management application built with an asynchronous Python backend, a reactive TypeScript/JavaScript frontend, background task processing, and full Docker Compose orchestration.
 
-- **Language & Runtime**: Python 3.12+ managed with uv[cite: 9, 10]
-- **Framework**: FastAPI with Pydantic v2 schemas[cite: 9]
-- **Persistence**: PostgreSQL 16, SQLAlchemy 2.0 (Asyncpg), Alembic migrations[cite: 9, 10]
-- **Authentication**: JWT access token (JSON payload) + HTTP-only refresh token cookie with token-family rotation and revocation tracking[cite: 3, 9, 10]
-- **Password Hashing**: Argon2id via Passlib / pwd_context[cite: 9]
-- **Asynchronous Workers**: Celery + Redis message broker and backend [custom isolated event loop runner for async SQLAlchemy operations](cite: 9)
-- **Security & Rate Limiting**: SlowAPI with Redis backend (multi-tiered 5/minute;20/hour on /login, disabled when ENVIRONMENT=test)
-- **Observability**: /api/v1/healthz endpoint verifying active PostgreSQL and Redis connectivity
-- **Testing**: pytest, pytest-asyncio, httpx [27 integration tests covering all routes and business constraints](cite: 9, 10)
-
-### Frontend (/frontend)
-
-- **Build Tool & Framework**: Vite + React 19 (JavaScript — .jsx)
-- **Styling**: Tailwind CSS v4 (configured via @tailwindcss/vite plugin and @import "tailwindcss"; in src/index.css)
-- **State Management & Fetching**: TanStack Query (React Query)
-- **HTTP Client**: Axios with request/response interceptors for automatic Bearer token injection and seamless cookie-based refresh rotation on 401s
-- **Icons & Visuals**: lucide-react, recharts
-
-### Infrastructure & Deployment
-
-- **Docker Compose**
-  1. fintrack_postgres: postgres:16-alpine (persistent volume postgres_data)
-  2. fintrack_redis: redis:7-alpine
-  3. fintrack_api: FastAPI backend running on port 8000 with automatic alembic upgrade head on startup
-  4. fintrack_worker: Celery worker executing app.tasks.export_tasks
-- **CI/CD**: GitHub Actions workflow (.github/workflows/ci.yml) running ephemeral PostgreSQL and Redis service containers, executing uv run pytest -v, and verifying the multi-stage Docker build
+- **Backend:** FastAPI (Python 3.12), Async SQLAlchemy 2.0, Alembic, Pydantic v2
+- **Database & Cache:** PostgreSQL 16 (`asyncpg`), Redis 8
+- **Background Workers:** Celery (asynchronous CSV financial report generation)
+- **Frontend:** React 19, Vite, Tailwind CSS, TanStack Query v5, React Router, Lucide Icons
+- **Reverse Proxy & Deployment:** Multi-stage Docker builds, Nginx (`nginx:stable-alpine`), Docker Compose
+- **CI/CD:** GitHub Actions automated test suite (`pytest` + `aiosqlite` / `httpx`)
 
 ---
 
-## 3. Completed Milestones (Backend Complete)
+## 2. Completed Modules
 
-1. **Auth Domain**: Registration, login, cookie-based token family rotation, logout, and /me[cite: 10].
-2. **Category Domain**: Ownership-scoped access, system default defaults, and expense/income integrity[cite: 10].
-3. **Transaction Domain**: Full CRUD with type matching, date range filters, pagination, and tenant isolation[cite: 10].
-4. **Reports Domain**: SQL aggregates (COALESCE, SUM, GROUP BY) calculating total income, total expense, net savings, and category percentage breakdown[cite: 1, 10].
-5. **Budgets Domain**: Category-scoped monthly spending ceilings with real-time remaining balance and is_over_budget tracking[cite: 10].
-6. **Async Reporting Engine**: Celery + Redis background pipeline generating and streaming CSV downloads.
-7. **Containerization**: Multi-stage Dockerfile and docker-compose.yml operational.
-8. **Automated Testing & CI**: 27 unit and integration tests passing with automated GitHub Actions CI execution[cite: 10].
+### Backend (`/backend`)
+
+- [x] **Authentication & Security:** JWT access tokens + `HttpOnly` refresh token cookie rotation, Argon2/Bcrypt password hashing, and strict user-scoped query isolation.
+- [x] **Categories:** System default categories (seeded via Alembic) + custom user categories with color and icon metadata, supporting `income` and `expense` types.
+- [x] **Transactions:** Full CRUD API with category type validation, date-range/category/type filtering, and paginated listing.
+- [x] **Budgets:** Monthly category spending limits (`month`/`year` scoped) with real-time aggregation of `spent_amount`, `remaining_amount`, `percentage_used`, and `is_over_budget`.
+- [x] **Reports & Async Exports:** Date-windowed financial summaries and Celery background tasks (`generate_csv_report`) with Redis task status polling and rate-limited export triggers.
+
+### Frontend (`/frontend`)
+
+- [x] **App Shell & Navigation:** Viewport-locked responsive layout (`AppLayout.jsx`) with collapsible sidebar, custom circular monogram branding, and mobile breakpoint detection (`window.matchMedia`).
+- [x] **Dashboard:** High-level financial KPIs, category distribution breakdown, and recent transactions feed.
+- [x] **Transactions Page:** Interactive ledger with filters, pagination, and unified `TransactionModal` for creating, editing, and deleting records.
+- [x] **Categories Page:** Custom category manager with live icon/color preview and inline editing.
+- [x] **Budgets Page:** Month/year navigator, category limit cards, three-tier threshold progress bars (`< 75%` emerald, `75–99%` amber, `≥ 100%` rose), and `BudgetModal`.
+- [x] **Reports Page:** Custom date-range selector, savings/burn ratio cards, category breakdown table, and asynchronous CSV export polling workflow.
+
+### Infrastructure & DevOps
+
+- [x] **Multi-Stage Frontend Container:** `node:20-alpine` builder stage compiling Vite assets into a lightweight `nginx:stable-alpine` production image.
+- [x] **Nginx Reverse Proxy:** SPA fallback routing (`try_files $uri $uri/ /index.html`) and internal Docker network proxying (`/api/` -> `http://fintrack_api:8000/api/`).
+- [x] **CI Pipeline:** 27 automated integration tests covering auth, categories, transactions, budgets, and reports.
 
 ---
 
-## 4. Current Phase: Frontend Development (/frontend)
+## 3. Resolved Engineering Edge Cases
 
-### Active Deliverables Checklist
-
-- [x] Scaffolding: Vite + React (JavaScript) initialized in frontend/.
-- [x] Styling: Tailwind CSS v4 configured with @tailwindcss/vite and verified.
-- [x] API Client (src/api/client.js): Axios instance with request token injection and 401 refresh interceptor.
-- [x] Auth State (src/context/AuthContext.jsx): Centralized auth context with memory-stored access token and user state.
-- [x] Routing: Public (/login, /register) and protected routes (/, /transactions, /budgets, /reports).
-- [x] Dashboard View: Monthly KPI cards, expense distribution chart (Recharts), and recent activity feed.
-- [x] Transactions Page: Transaction records with filters, Create, Edit, and Delete features.
-- [x] Category Page: Default and Custom Categories list, Create, Edit, and Delete features.
-- [x] Reports Page: Full Report of all transactions with filter by date range, Export as CSV feature.
-- [x] Budgets Page: Existing Budgets card, Create, Edit and Delete features.
+1. **Async SQLAlchemy `MissingGreenlet` on Commit:** Prevented implicit synchronous lazy-loads on `updated_at` and relationship attributes during FastAPI response serialization by explicitly refreshing or eager-loading (`selectinload`) post-commit.
+2. **SQLite vs. PostgreSQL Decimal Scale Consistency:** Added Pydantic `@field_validator` quantization (`Decimal("0.01")`) on monetary fields so integer inputs (e.g., `500`) serialize consistently as `"500.00"` across both SQLite (CI tests) and PostgreSQL (production).
+3. **1-Indexed vs. 0-Indexed Month Synchronization:** Standardized month state to 1-indexed (`1–12`) across `BudgetsPage` API queries and `BudgetModal` `<input type="month">` handlers to match PostgreSQL storage.
+4. **Nginx `/api/` Prefix Stripping:** Configured `proxy_pass http://fintrack_api:8000/api/;` to prevent duplicate `/api/v1/v1/` path resolution.
