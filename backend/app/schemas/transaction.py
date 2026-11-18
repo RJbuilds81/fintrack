@@ -1,9 +1,9 @@
 import uuid
 from datetime import datetime
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 TransactionType = Literal["income", "expense"]
 
@@ -40,6 +40,11 @@ class TransactionBase(BaseModel):
         ...,
         description="Target category UUID",
     )
+
+    @field_validator("amount", mode="after")
+    @classmethod
+    def quantize_amount(cls, v: Decimal) -> Decimal:
+        return v.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
 
 class TransactionCreate(TransactionBase):
