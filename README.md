@@ -1,6 +1,5 @@
 # FinTrack — Full-Stack Personal Finance & Budgeting Platform [![FinTrack CI Pipeline](https://github.com/Rishab-Jain-81/fintrack/actions/workflows/ci.yml/badge.svg)](https://github.com/Rishab-Jain-81/fintrack/actions/workflows/ci.yml)
 
-
 FinTrack is a full-stack personal finance web application engineered for tracking income and expenses, enforcing monthly category budgets, analyzing financial ratios, and exporting asynchronous CSV reports.
 
 ---
