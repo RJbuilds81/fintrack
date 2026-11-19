@@ -13,6 +13,12 @@ FinTrack is a full-stack personal finance web application engineered for trackin
 - **Asynchronous CSV Exports:** Background report generation powered by Celery and Redis, complete with rate limiting and non-blocking frontend status polling.
 - **Responsive Dark-Mode UI:** Collapsible sidebar navigation, custom category iconography, and mobile-friendly layouts built with React and Tailwind CSS.
 
+![FinTrack Dashboard](.github/assets/Dashboard.png)
+
+![FinTrack Dashboard](.github/assets/Budgets.png)
+
+![FinTrack Dashboard](.github/assets/Reports.png)
+
 ---
 
 ## Tech Stack
