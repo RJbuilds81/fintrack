@@ -59,7 +59,7 @@ Browser (React SPA)
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Rishab-Jain-81/fintrack.git
+git clone https://github.com/RJbuilds81/fintrack.git
 cd fintrack
 ```
 
